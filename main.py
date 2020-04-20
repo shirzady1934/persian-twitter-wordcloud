@@ -8,9 +8,9 @@ from wordcloud import WordCloud
 from datetime import datetime
 from arabic_reshaper import reshape as rshp
 from bidi.algorithm import get_display as dsp
-from config import fonts APP_KEY, APP_SECRET, username
+from config import fonts
 try:
-	from mytoken import 
+	from mytoken import APP_KEY, APP_SECRET, username
 except:
 	pass
 
