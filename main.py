@@ -8,16 +8,21 @@ from wordcloud import WordCloud
 from datetime import datetime
 from arabic_reshaper import reshape as rshp
 from bidi.algorithm import get_display as dsp
-from config import fonts
+from config import fonts APP_KEY, APP_SECRET, username
+try:
+	from mytoken import 
+except:
+	pass
 
-def reshape(word):
+#Unused funtion
+'''def reshape(word):
 	try:
 		return dsp(rshp(word))
 	except:
-		return ''
+		return "" '''
 
-username = 'frankgunderwood'
-
+#Uncomment these 3 line and fill them!
+#username = '' 
 #APP_KEY = ""
 #APP_SECRET = ""
 
@@ -50,6 +55,8 @@ result = re.sub("\d+", '', result)
 
 words = result.split(" ")
 words = [word for word in words if len(word) > 2]
+
+#In new version should not reverse persian words!
 #words = [reshape(word) for word in words]
 
 stopwords = []
@@ -58,6 +65,8 @@ with open('./stopwords') as f:
 	while res:
 		res = f.readline()
 		stopwords.append(res.replace('\n', ''))
+
+#Unused in new version of wordcloud!
 #stopwords = [reshape(word) for word in stopwords]
 
 mask = np.array(Image.open('./masks/mygraph.jpg'))
