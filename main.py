@@ -14,27 +14,19 @@ try:
 except:
 	pass
 
-#Unused funtion
-'''def reshape(word):
-	try:
-		return dsp(rshp(word))
-	except:
-		return "" '''
+#Funtion for reshape words
+#def reshape(word):
+#	try:
+#		return dsp(rshp(word))
+#	except:
+#		return "" '''
 
 #Uncomment these 3 line and fill them!
 #username = '' 
 #APP_KEY = ""
 #APP_SECRET = ""
 
-
-'''client_args = {
-        'proxies': {
-            'http': 'socks5://127.0.0.1:9050',
-            'https': 'socks5://127.0.0.1:9050'
-            }
-}'''
 twitter = Twython(APP_KEY, APP_SECRET)#, client_args=client_args)
-
 user_timeline=twitter.get_user_timeline(screen_name=username, count=1) 
 last_id = user_timeline[0]['id']-1
 for i in range(20):
@@ -52,13 +44,8 @@ result = re.sub(r"\\[a-z][a-z]?[0-9]+", '', no_links)
 result = re.sub(r"[-()\"#/@;:<>{}+=~|_.!*?,]", '', result)
 result = re.sub('[A-z]', '', result)
 result = re.sub("\d+", '', result)
-
 words = result.split(" ")
 words = [word for word in words if len(word) > 2]
-
-#In new version should not reverse persian words!
-#words = [reshape(word) for word in words]
-
 stopwords = []
 res = True
 with open('./stopwords') as f:
@@ -66,18 +53,16 @@ with open('./stopwords') as f:
 		res = f.readline()
 		stopwords.append(res.replace('\n', ''))
 
-#Unused in new version of wordcloud!
+#Reshape words for display!
+#words = [reshape(word) for word in words]
 #stopwords = [reshape(word) for word in stopwords]
 
 mask = np.array(Image.open('./masks/mygraph.jpg'))
-
-
 for font in fonts:
 	font_name = font
-	font_path = './fonts/%s.ttf' % font_name #nastaligh
-	wc = WordCloud(background_color="white", max_words=500, mask=mask, stopwords=stopwords, font_path=font_path)#, persian_normalize=False)
+	font_path = './fonts/%s.ttf' % font_name
+	wc = WordCloud(background_color="white", max_words=500, mask=mask, stopwords=stopwords, font_path=font_path)
 	#wc = WordCloudFa(persian_normalize=True, background_color="white", max_words=500, mask=mask, stopwords=stopwords)
-
 	clean_string = ','.join(words)
 	wc.generate(clean_string)
 	image = wc.to_image()
