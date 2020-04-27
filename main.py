@@ -3,12 +3,12 @@ import re
 import matplotlib.pyplot as plt
 from twython import Twython
 from PIL import Image
-from wordcloud_fa import WordCloudFa
 from wordcloud import WordCloud
 from datetime import datetime
 from arabic_reshaper import reshape as rshp
 from bidi.algorithm import get_display as dsp
 from config import fonts
+#from wordcloud_fa import WordCloudFa
 try:
 	from mytoken import APP_KEY, APP_SECRET, username
 except:
