@@ -2,14 +2,11 @@ import re
 import tweepy
 import numpy as np
 import matplotlib.pyplot as plt
-
 from PIL import Image
 from config import fonts
 from datetime import datetime
 from wordcloud import WordCloud
 from mytoken import APP_KEY, APP_SECRET, ACCESS_TOEKN, ACCESS_TOEKN_SECRET
-
-#from twython import Twython
 #from arabic_reshaper import reshape as rshp
 #from bidi.algorithm import get_display as dsp
 
@@ -24,7 +21,7 @@ except:
 #	try:
 #		return dsp(rshp(word))
 #	except:
-#		return "" '''
+#		return ""
 
 #Uncomment these 3 line and fill them!
 #username = '' 
@@ -55,24 +52,22 @@ result = re.sub("\d+", '', result)
 words = result.split(" ")
 words = [word for word in words if len(word) > 2]
 stopwords = []
-res = True
+
 with open('./stopwords') as f:
-	while res:
-		res = f.readline()
-		stopwords.append(res.replace('\n', ''))
+	stopwords = [line.strip('\n') for line in f]
 
 #Reshape words for display!
 #words = [reshape(word) for word in words]
 #stopwords = [reshape(word) for word in stopwords]
 
+clean_string = ','.join(words)
 mask = np.array(Image.open('./masks/mygraph.jpg'))
+name_time = datetime.now().strftime('%y-%m-%d')
+
 for font in fonts:
 	font_name = font
 	font_path = './fonts/%s.ttf' % font_name
 	wc = WordCloud(background_color="white", max_words=500, mask=mask, stopwords=stopwords, font_path=font_path)
-	#wc = WordCloudFa(persian_normalize=True, background_color="white", max_words=500, mask=mask, stopwords=stopwords)
-	clean_string = ','.join(words)
 	wc.generate(clean_string)
 	image = wc.to_image()
-	image.save('./wordclouds/%s-%s.png' % (username, font_name))
-	#image.show()
+	image.save('./wordclouds/%s-%s-%s.png' % (username, font_name, name_time))
