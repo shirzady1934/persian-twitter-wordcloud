@@ -1,18 +1,23 @@
-import numpy as np
 import re
+import tweepy
+import numpy as np
 import matplotlib.pyplot as plt
-from twython import Twython
+
 from PIL import Image
-from wordcloud import WordCloud
-from datetime import datetime
-from arabic_reshaper import reshape as rshp
-from bidi.algorithm import get_display as dsp
 from config import fonts
-#from wordcloud_fa import WordCloudFa
+from datetime import datetime
+from wordcloud import WordCloud
+from mytoken import APP_KEY, APP_SECRET, ACCESS_TOEKN, ACCESS_TOEKN_SECRET
+
+#from twython import Twython
+#from arabic_reshaper import reshape as rshp
+#from bidi.algorithm import get_display as dsp
+
 try:
-	from mytoken import APP_KEY, APP_SECRET, username
+	from mytoken import username
 except:
-	pass
+	username = input("Enter username:")
+	
 
 #Funtion for reshape words
 #def reshape(word):
@@ -26,17 +31,20 @@ except:
 #APP_KEY = ""
 #APP_SECRET = ""
 
-twitter = Twython(APP_KEY, APP_SECRET)#, client_args=client_args)
-user_timeline=twitter.get_user_timeline(screen_name=username, count=1) 
-last_id = user_timeline[0]['id']-1
-for i in range(20):
-	batch = twitter.get_user_timeline(screen_name=username, count=500, max_id=last_id)
-	user_timeline.extend(batch)
-	last_id = user_timeline[-1]['id'] - 1
+
+auth = tweepy.OAuthHandler(APP_KEY, APP_SECRET)
+auth.set_access_token(ACCESS_TOEKN, ACCESS_TOEKN_SECRET)
+twitter = tweepy.API(auth,wait_on_rate_limit=True)
+
+user_timeline = []
+for tweet in tweepy.Cursor(twitter.user_timeline,id=username, count=200).items():
+	user_timeline.append(tweet)
+	if len(user_timeline) >= 4000:
+		break
 
 tweets = []
 for tweet in user_timeline:
-    tweets.append(tweet['text'])
+    tweets.append(tweet._json['text'])
 
 tweets_string = ' '.join(tweets)
 no_links = re.sub(r'http\S+', '', tweets_string)
