@@ -4,4 +4,5 @@ fonts = [
 	'Scheherazade-Regular',
 	'NotoNaskhArabic-Regular',
 	'NotoSansArabic-Regular'
+	'Nazanin',
 ]
