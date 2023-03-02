@@ -12,4 +12,6 @@ For using specefic font change `config.py` file and add your font to fonts list.
 sample of generate wordcloud:
 
 
-![image](https://user-images.githubusercontent.com/58934667/222558270-6083b776-5eb7-4c8d-ada8-03017309d44a.png)
+<center>
+      <img src="https://user-images.githubusercontent.com/58934667/222558270-6083b776-5eb7-4c8d-ada8-03017309d44a.png" width="550">
+</center>
