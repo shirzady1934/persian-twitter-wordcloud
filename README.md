@@ -9,7 +9,7 @@ For using specefic font change `config.py` file and add your font to fonts list.
 
       python main.py
             
-sample of generate wordcloud:
+sample of generated wordcloud:
 
 
 <center>
