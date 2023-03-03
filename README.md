@@ -7,7 +7,7 @@ For using specefic font change `config.py` file and add your font to fonts list.
 
 - for generating wordcloud run this command:
 
-      python main.py
+      $ python main.py
             
 sample of generated wordcloud:
 
